@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分页原理</title>
+    <!--link rel="stylesheet" href="rgrid/theme/default/rgrid.css"-->
+    <style>
+        .clear{clear: both}
+        .page-info{float: left;}
+        .page-operate{float: right;}
+        table{width:100%;}
+        td,th{border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
+        tr>th:last-child,tr>td:last-child{border-right: 0;}
+        th{background: #d9dee2;}
+        .rgrid{height:500px;border:1px solid #ccc;}
+        .rgrid-pages{margin-top: 1em;}
+        a{color:#000;text-decoration: none;}
+        .page-operate>a{display: inline-block;margin:0.25em;padding:0.5em 1em;border:1px solid #ccc;border-radius:4px;font-size: small;}
+        .img-contain{width:200px;height:200px;overflow: hidden;}
+        .img-content{float: left;width:198px;height: 198px;line-height: 200px;text-align: center;border:1px solid #ccc;}
+        .main-contain{width:1000px;height:200px;}
+        .clear{clear: both;}
+    </style>
+</head>
+<body>
+<div class="contain">
+    <div class="rgrid">
+        <table border="0" cellpadding="5px" cellspacing="0">
+            <thead>
+            <tr>
+                <th>序列</th>
+                <th>姓名</th>
+                <th>学号</th>
+                <th>班级</th>
+                <th>年龄</th>
+                <th>性别</th>
+            </tr>
+            </thead>
+            <tbody id="tbl-tbody"></tbody>
+        </table>
+    </div>
+    <div class="rgrid-pages">
+        <div class="page-info">
+            <span>共</span>
+            <span class="total-rows">0</span>
+            <span>行</span>
+            <span>每页</span>
+            <input class="page-rows" type="text" value="10" style="width: 25px;text-align: center;outline: none;" onchange="init_page_btn._init_pagerow(this)">
+            <span>行</span>
+            <span>第</span>
+            <input class="current-page" type="text" value="1" style="width: 25px;text-align: center;outline: none;" onchange="init_page_btn._init_currentPage(this)">/
+            <span class="total-page">1</span>
+            <span>页</span>
+        </div>
+        <div class="page-operate">
+            <a href="javascript:void(0)" onclick="init_page_btn._init_currentPage_number('first')">首页</a>
+            <a href="javascript:void(0)" onclick="init_page_btn._init_currentPage_number('prev')">上一页</a>
+            <a href="javascript:void(0)" onclick="init_page_btn._init_currentPage_number('next')">下一页</a>
+            <a href="javascript:void(0)" onclick="init_page_btn._init_currentPage_number('last')">尾页</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="img-contain">
+        <div class="main-contain">
+            <div class="img-content" id="img-content1" name="img-content1" style="background-color: #f00;">图片1</div>
+            <div class="img-content" id="img-content2" name="img-content2" style="background-color: #ff0;">图片2</div>
+            <div class="img-content" id="img-content3" name="img-content3" style="background-color: #fff5cc;">图片3</div>
+            <div class="img-content" id="img-content4" name="img-content4" style="background-color: #f2f2f2;">图片4</div>
+            <div class="img-content" id="img-content5" name="img-content5" style="background-color: #0e90d2;">图片5</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <a href="#img-content1">图片1</a>
+    <a href="#img-content2">图片2</a>
+    <a href="#img-content3">图片3</a>
+    <a href="#img-content4">图片4</a>
+    <a href="#img-content5">图片5</a>
+</div>
+<script src="jquery.min.js"></script>
+<!--script src="rgrid/rgrid.js"></script-->
+<script src="index.js"></script>
+</body>
+</html>

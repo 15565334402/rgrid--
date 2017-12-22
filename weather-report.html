@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天气预报</title>
+</head>
+<body>
+<div id="reJson"></div><br/><br/>
+<div id="reJson-re"></div><br/><br/>
+<div id="reJson-re-re"></div><br/><br/>
+<div id="reJson-re-re-re"></div>
+<img id="weatherImg" src="http://php.weather.sina.com.cn/images/yb3/78_78/dayu_0.png">
+<script src="jquery.min.js"></script>
+<script>
+    //var cityCode={}
+    $(function () {
+        init_getWeather()
+    });
+    function init_getWeather() {
+        //稳定，推荐使用，返回json数据
+        $.get("http://wthrcdn.etouch.cn/weather_mini?citykey=101200101",function (data) {
+            console.log(data);
+            $("#reJson").html(JSON.stringify(data));
+        },'jsonp');
+        //可参考
+        $.get("http://api.help.bj.cn/apis/weather6d/?id=101060101",function (data) {
+            console.log(data);
+            $("#reJson-re").html(data);
+        });
+        //稳定，推荐使用，返回xml数据
+        $.get("http://wthrcdn.etouch.cn/WeatherApi?citykey=101010100",function (data) {
+            console.log(data);
+            $("#reJson-re-re").html(data);
+        });
+        //新浪天气，实时天气数据
+        $.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",function(data){        //根据ip查询当前省市
+            var province = remote_ip_info["province"];  //省份
+            var city = remote_ip_info["city"];  //城市
+            var url = "http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&city=" + city + "&day=0&dfc=3";  //不填city，默认显示当前所在城市,即可不查询省市
+            $.ajax({
+                url : url,
+                dataType : "script",
+                scriptCharset : "gbk",
+                success : function(data) {
+                    var _w = window.SWther.w[city][0];
+                    var _f= _w.f1+"_0.png";             //天气图片  0代表白天，1代表黑夜
+                    if(new Date().getHours() > 17){
+                        _f= _w.f2+"_1.png";
+                    }
+                    var img = "<img width='16px' height='16px' src='http://i2.sinaimg.cn/dy/main/weather/weatherplugin/wthIco/20_20/" +_f
+                        + "' />";   //图片地址1  20_20代表图片尺寸
+                    $("#reJson-re-re-re").html(JSON.stringify(_w));
+                    $('#weatherImg').attr("src","http://php.weather.sina.com.cn/images/yb3/78_78/"+_f);  //图片地址2，图片尺寸有40_40或78_78
+                    $(img).appendTo("body");
+                }
+            });
+        }) ;
+    }
+</script>
+</body>
+</html>
